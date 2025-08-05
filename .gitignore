@@ -54,3 +54,4 @@ coverage/
 
 # MongoDB dump
 dump/
+git rm -r --cached node_modules .env
