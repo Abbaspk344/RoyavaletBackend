@@ -1,0 +1,56 @@
+# -----------------
+# Node.js Gitignore
+# -----------------
+
+# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.local
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Compiled source
+dist/
+build/
+
+# Optional npm cache directory
+.npm/
+
+# Optional eslint cache
+.eslintcache
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS system files
+.DS_Store
+Thumbs.db
+
+# Coverage reports
+coverage/
+
+# Debugging
+*.tgz
+*.swp
+
+# TypeScript (if used)
+*.tsbuildinfo
+
+# MongoDB dump
+dump/
