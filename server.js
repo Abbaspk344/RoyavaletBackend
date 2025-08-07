@@ -26,25 +26,42 @@ app.use(limiter);
 
 // CORS configuration
 const allowedOrigins = [
-  'http://localhost:5173',  
+  'http://localhost:5173',
   'https://royavalet.netlify.app',
-  'https://main--royavalet.netlify.app' 
+  'https://main--royavalet.netlify.app',
+  /^https:\/\/.*--royavalet\.netlify\.app$/  // Allow all Netlify preview deployments
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
+    console.log('CORS Origin:', origin);
+
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
 
-    if (allowedOrigins.indexOf(origin) !== -1) {
+    // Check if origin matches any allowed origins
+    const isAllowed = allowedOrigins.some(allowedOrigin => {
+      if (typeof allowedOrigin === 'string') {
+        return allowedOrigin === origin;
+      } else if (allowedOrigin instanceof RegExp) {
+        return allowedOrigin.test(origin);
+      }
+      return false;
+    });
+
+    if (isAllowed) {
       callback(null, true);
     } else {
+      console.log('CORS blocked origin:', origin);
       callback(new Error('Not allowed by CORS'));
     }
   },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
+  exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar'],
+  preflightContinue: false,
+  optionsSuccessStatus: 200
 }));
 
 // Body parsing middleware
@@ -58,6 +75,15 @@ import authRoutes from './routes/auth.js';
 import contactRoutes from './routes/contactRoutes.js';
 import emailRoutes from './routes/emailRoutes.js';
 import dashRoutes from './routes/dashRoutes.js';
+
+// Handle preflight requests explicitly
+app.options('*', (req, res) => {
+  res.header('Access-Control-Allow-Origin', req.headers.origin);
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Origin');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.sendStatus(200);
+});
 
 // Routes
 app.use('/api/auth', authRoutes);
