@@ -27,8 +27,8 @@ const validateContact = [
     .withMessage('Please provide a valid email address'),
   
   body('phone')
-    .matches(/^[\+]?[0-9]{10,15}$/)
-    .withMessage('Please provide a valid phone number (10-15 digits)'),
+    .matches(/^[\+]?[0-9\s\-\(\)\.]{10,20}$/)
+    .withMessage('Please provide a valid phone number'),
   
   body('description')
     .trim()
