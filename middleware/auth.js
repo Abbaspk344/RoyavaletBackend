@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+import jwt from 'jsonwebtoken';
+import User from '../models/User.js';
 
 // Middleware to verify JWT token
 const authenticateToken = async (req, res, next) => {
@@ -72,7 +72,5 @@ const requireAdmin = (req, res, next) => {
   }
 };
 
-module.exports = {
-  authenticateToken,
-  requireAdmin
-};
+export { authenticateToken, requireAdmin };
+export default authenticateToken;
