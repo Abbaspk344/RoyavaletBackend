@@ -34,7 +34,7 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: function (origin, callback) {
-    console.log('CORS Origin:', origin);
+    console.log('🌐 Incoming CORS request from:', origin);
 
     // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
@@ -50,9 +50,10 @@ app.use(cors({
     });
 
     if (isAllowed) {
+      console.log('✅ Allowed CORS origin:', origin);
       callback(null, true);
     } else {
-      console.log('CORS blocked origin:', origin);
+      console.log('❌ Blocked CORS origin:', origin);
       callback(new Error('Not allowed by CORS'));
     }
   },
@@ -68,22 +69,11 @@ app.use(cors({
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
-
-
 // Import Routes
 import authRoutes from './routes/auth.js';
 import contactRoutes from './routes/contactRoutes.js';
 import emailRoutes from './routes/emailRoutes.js';
 import dashRoutes from './routes/dashRoutes.js';
-
-// Handle preflight requests explicitly
-app.options('*', (req, res) => {
-  res.header('Access-Control-Allow-Origin', req.headers.origin);
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, Accept, Origin');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.sendStatus(200);
-});
 
 // Routes
 app.use('/api/auth', authRoutes);
