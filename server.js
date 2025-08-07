@@ -26,9 +26,9 @@ app.use(limiter);
 
 // CORS configuration
 const allowedOrigins = [
-  'http://localhost:5173',  // Local development
-  'https://royavalet.netlify.app',  // Production Netlify domain
-  'https://main--royavalet.netlify.app'  // Netlify preview deployments
+  'http://localhost:5173',  
+  'https://royavalet.netlify.app',
+  'https://main--royavalet.netlify.app' 
 ];
 
 app.use(cors({
