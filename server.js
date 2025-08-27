@@ -27,9 +27,8 @@ app.use(limiter);
 // CORS configuration
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://royavalet.netlify.app',
-  'https://main--royavalet.netlify.app',
-  /^https:\/\/.*--royavalet\.netlify\.app$/  // Allow all Netlify preview deployments
+"https://royavaletparkingservices.ae",
+  "https://www.royavaletparkingservices.ae/"
 ];
 
 app.use(cors({
