@@ -28,7 +28,9 @@ app.use(limiter);
 const allowedOrigins = [
   'http://localhost:5173',
 "https://royavaletparkingservices.ae",
-  "https://www.royavaletparkingservices.ae/"
+  "https://www.royavaletparkingservices.ae",
+  "http://royavaletparkingservices.ae",
+  "http://www.royavaletparkingservices.ae"
 ];
 
 app.use(cors({
